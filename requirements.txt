@@ -1,0 +1,4 @@
+tencentcloud-sdk-python
+requests
+Flask
+Pillow
