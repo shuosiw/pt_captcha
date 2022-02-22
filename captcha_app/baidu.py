@@ -2,7 +2,7 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-20
+# @Last Modified time: 2022-02-23
 
 import os
 import re
@@ -61,6 +61,5 @@ class baidu(object):
         """
         result = R5B6B4
         """
-        else:
-            print('ERROR: cannot get recognition from baidubce')
-            sys.exit(1)
+        print('ERROR: cannot get recognition from baidubce')
+        sys.exit(1)
