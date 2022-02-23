@@ -2,13 +2,13 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-20
+# @Last Modified time: 2022-02-23
 
 import os
 import json
 import base64
 from .imgutils import imgutils
-from .baidu import baidu
+from .ocr import ocr
 from flask import request, Blueprint, current_app
 
 captcha_blue = Blueprint('routes', __name__)
@@ -48,5 +48,7 @@ def upload():
     image_out = path + '/code.png'
     imgut = imgutils(image_in, image_out)
     imgut.denoise()
-    bd = baidu(current_app.config['API_KEY'], current_app.config['SECRET_KEY'], image_out)
-    return bd.recog_img(), 200
+    vendor = ocr(vendor=current_app.config['OCR_VENDOR'],
+        apikey=current_app.config['API_KEY'], secret=current_app.config['SECRET_KEY'],
+        image=image_out, region=current_app.config['API_REGION'])
+    return vendor.ocr_output(), 200

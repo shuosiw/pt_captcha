@@ -15,7 +15,7 @@ class baidu(object):
     baidu ocr class
     """
 
-    def __init__(self, apikey, secret, image):
+    def __init__(self, apikey, secret, image, region=""):
         self.image = image
         self.get_token_url = "https://aip.baidubce.com/oauth/2.0/token"
         self.request_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
