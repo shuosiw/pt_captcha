@@ -2,7 +2,7 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-23
+# @Last Modified time: 2022-02-24
 
 import os
 import json
@@ -40,15 +40,12 @@ def upload():
     if request.method == 'GET':
         return logout
     result = json.loads(request.data)
-    img_base64 = result['image']
-    path = os.path.dirname(os.path.abspath(__file__))
-    with open(path + '/upload.png', 'wb') as f:
-        f.write(base64.b64decode(img_base64))
-    image_in = path + '/upload.png'
-    image_out = path + '/code.png'
-    imgut = imgutils(image_in, image_out)
-    imgut.denoise()
+    imgbase64 = result.get('image')
+    if not imgbase64:
+        print('cannot get image base64 data from payload')
+        return 'ERROR: image not found!'
+    gray_imgbase64 = imgutils(imgbase64).denoise()
     vendor = ocr(vendor=current_app.config['OCR_VENDOR'],
         apikey=current_app.config['API_KEY'], secret=current_app.config['SECRET_KEY'],
-        image=image_out, region=current_app.config['API_REGION'])
+        image=gray_imgbase64, region=current_app.config['API_REGION'])
     return vendor.ocr_output(), 200

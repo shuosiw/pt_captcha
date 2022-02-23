@@ -2,7 +2,7 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-23
+# @Last Modified time: 2022-02-24
 
 import os
 import re
@@ -25,16 +25,8 @@ class baidu(object):
             "client_secret": secret,
         }
 
-    def __get_img_base64(self):
-        if not os.path.exists(self.image):
-            print('image file not exists')
-            sys.exit(1)
-        with open(self.image, 'rb') as f:
-            img_base64 = str(base64.b64encode(f.read()), 'utf-8')
-        return img_base64
-
     def recog_img(self):
-        img_base64 = self.__get_img_base64()
+        img_base64 = self.image
         resp = requests.get(self.get_token_url, self.params).json()
         token = resp.get('access_token')
         if not token:

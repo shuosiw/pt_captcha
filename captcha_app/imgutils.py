@@ -2,8 +2,10 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-20
+# @Last Modified time: 2022-02-24
 
+import base64
+from io import BytesIO
 from PIL import Image
 
 class imgutils(object):
@@ -11,16 +13,15 @@ class imgutils(object):
     utils for image pre-process
     """
 
-    def __init__(self, image_in, image_out, threshold=115):
-        self.image_in = image_in
-        self.image_out = image_out
+    def __init__(self, imgbase64, threshold=115):
+        self.imgbase64 = imgbase64
         self.threshold = threshold
 
     def grayscale(self):
         """
         transfer to Grayscale processing
         """
-        img = Image.open(self.image_in)
+        img = Image.open(BytesIO(base64.b64decode(self.imgbase64)))
         imgry = img.convert('L')
         threshold = self.threshold
         table = []
@@ -82,5 +83,7 @@ class imgutils(object):
             imgbin.putpixel((item[0], item[1]), 1)
 
         # save image
-        imgbin.save(self.image_out)
+        out_buffer = BytesIO()
+        imgbin.save(out_buffer, format='PNG')
+        return base64.b64encode(out_buffer.getvalue())
 
