@@ -15,8 +15,7 @@ class baidu(object):
     baidu ocr class
     """
 
-    def __init__(self, apikey, secret, image, region=""):
-        self.image = image
+    def __init__(self, apikey, secret, region=""):
         self.get_token_url = "https://aip.baidubce.com/oauth/2.0/token"
         self.request_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
         self.params = {
@@ -25,14 +24,13 @@ class baidu(object):
             "client_secret": secret,
         }
 
-    def recog_img(self):
-        img_base64 = self.image
+    def recog_img(self, image):
         resp = requests.get(self.get_token_url, self.params).json()
         token = resp.get('access_token')
         if not token:
             print('ERROR: cannot get access_token from baidubce')
             sys.exit(1)
-        params = {'image': img_base64}
+        params = {'image': image}
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         url = '%(req)s?access_token=%(token)s' % {
             'req': self.request_url,

@@ -2,7 +2,7 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-24
+# @Last Modified time: 2022-02-25
 
 import os
 import json
@@ -12,6 +12,7 @@ from .ocr import ocr
 from flask import request, Blueprint, current_app
 
 captcha_blue = Blueprint('routes', __name__)
+
 
 logout = '''
     <html>
@@ -47,5 +48,5 @@ def upload():
     gray_imgbase64 = imgutils(imgbase64).denoise()
     vendor = ocr(vendor=current_app.config['OCR_VENDOR'],
         apikey=current_app.config['API_KEY'], secret=current_app.config['SECRET_KEY'],
-        image=gray_imgbase64, region=current_app.config['API_REGION'])
-    return vendor.ocr_output(), 200
+        region=current_app.config['API_REGION'])
+    return vendor.ocr_output(gray_imgbase64), 200

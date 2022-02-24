@@ -2,7 +2,7 @@
 # @Author: Source
 # @Date:   2022-02-23
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-23
+# @Last Modified time: 2022-02-24
 
 import sys
 import importlib
@@ -14,11 +14,10 @@ class ocr(object):
             importlib.import_module("captcha_app.ocrvendor.%s" % vendor), vendor)
         self.apikey = kwargs.get("apikey")
         self.secret = kwargs.get("secret")
-        self.image = kwargs.get("image")
         self.region = kwargs.get("region")
 
-    def ocr_output(self):
-        if all([self.apikey, self.secret, self.image]):
+    def ocr_output(self, image):
+        if all([self.apikey, self.secret, image]):
             _vendor = self.vendor(apikey=self.apikey,
-                 secret=self.secret, image=self.image, region=self.region)
-            return _vendor.recog_img()
+                 secret=self.secret, region=self.region)
+            return _vendor.recog_img(image)
