@@ -14,6 +14,12 @@ from captcha_app.ocr import ocr
 
 captcha_blue = Blueprint('routes', __name__)
 
+vendor = os.environ.get('OCR_VENDOR', 'null')
+apikey = os.environ.get('API_KEY', 'null')
+secret = os.environ.get('SECRET_KEY', 'null')
+region = os.environ.get('API_REGION', 'null')
+ocrvd = ocr(vendor, apikey=apikey, secret=secret, region=region)
+
 
 logout = '''
     <html>
@@ -47,7 +53,4 @@ def upload():
         print('cannot get image base64 data from payload')
         return 'ERROR: image not found!'
     gray_imgbase64 = imgutils(imgbase64).denoise()
-    vendor = ocr(vendor=current_app.config['OCR_VENDOR'],
-        apikey=current_app.config['API_KEY'], secret=current_app.config['SECRET_KEY'],
-        region=current_app.config['API_REGION'])
-    return vendor.ocr_output(gray_imgbase64), 200
+    return ocrvd.ocr_output(gray_imgbase64), 200
