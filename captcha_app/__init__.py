@@ -2,11 +2,11 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-23
+# @Last Modified time: 2022-02-26
 
 import os
 from flask import Flask
-from .captcha import captcha_blue
+from captcha_app.app import captcha_blue
 
 
 def create_app():

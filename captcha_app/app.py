@@ -2,14 +2,15 @@
 # @Author: Source
 # @Date:   2022-02-20
 # @Last Modified by:   Source
-# @Last Modified time: 2022-02-25
+# @Last Modified time: 2022-02-26
 
 import os
 import json
 import base64
-from .imgutils import imgutils
-from .ocr import ocr
 from flask import request, Blueprint, current_app
+from captcha_app.utils import imgutils
+from captcha_app.ocr import ocr
+
 
 captcha_blue = Blueprint('routes', __name__)
 
