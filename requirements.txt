@@ -1,7 +1,6 @@
-tencentcloud-sdk-python
 urllib3==1.26.8
 requests==2.27.1
 Jinja2==3.0.3
 Flask==2.0.3
 Pillow==8.4.0
-
+tencentcloud-sdk-python==3.0.588
