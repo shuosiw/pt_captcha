@@ -67,10 +67,10 @@ curl http://10.0.0.100:5000/current_ocr
 ```
 curl -X POST http://10.0.0.100:5000/upload \
     -H 'Content-Type: text/json' \
-    -d "{'image': '$IMAGE_BASE64'}"
+    -d "{\"image\": \"$IMAGE_BASE64\"}"
 ```
 
-最终返回数据为：
+注意上述参数需要严格的 json 格式，必须使用双引号，最终返回数据为：
 
 ```
 "recognition":"R5B6B4"
