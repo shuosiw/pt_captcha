@@ -9,17 +9,9 @@ import json
 import base64
 from flask import request, Blueprint, current_app
 from captcha_app.utils import imgutils
-from captcha_app.ocr import ocr
-
+from captcha_app.ocr import ocrvd
 
 captcha_blue = Blueprint('routes', __name__)
-
-vendor = os.environ.get('OCR_VENDOR', 'null')
-apikey = os.environ.get('API_KEY', 'null')
-secret = os.environ.get('SECRET_KEY', 'null')
-region = os.environ.get('API_REGION', 'null')
-ocrvd = ocr(vendor, apikey=apikey, secret=secret, region=region)
-
 
 logout = '''
     <html>
@@ -41,14 +33,13 @@ def index():
 
 @captcha_blue.route('/current_ocr', methods=['GET'])
 def current_ocr():
-    return current_app.config['API_TYPE']
+    return ocrvd.current_ocr()
 
 @captcha_blue.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'GET':
         return logout
-    result = json.loads(request.data)
-    imgbase64 = result.get('image')
+    imgbase64 = json.loads(request.data).get('image')
     if not imgbase64:
         print('cannot get image base64 data from payload')
         return 'ERROR: image not found!'

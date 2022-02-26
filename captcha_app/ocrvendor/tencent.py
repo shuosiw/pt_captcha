@@ -26,12 +26,7 @@ class tencent(object):
         clientProfile = ClientProfile()
         clientProfile.signMethod = "TC3-HMAC-SHA256"
         clientProfile.httpProfile = httpProfile
-        if not region or region == 'null':
-            rg = DEFAULT_REGION
-            print('region not set, use default region: %s' % DEFAULT_REGION)
-        else:
-            rg = region
-        self.client = ocr_client.OcrClient(cred, rg, clientProfile)
+        self.client = ocr_client.OcrClient(cred, region, clientProfile)
 
 
     def recog_img(self, image):
